@@ -15,4 +15,23 @@ results.
 Role is selected at registration and stored as a claim in the authentication
 cookie after login, so every subsequent request already carries the user's role.
 
+## Project Structure
+```
+RaceDay_Part2/
+├── RaceDay.API/
+│   ├── Controllers/       # AuthController, ProfileController, EventsController,
+│   │                        CategoriesController, EnrolmentsController, ResultsController
+│   ├── Models/             # Organiser, Participant, Event, Category, Enrolment, Result
+│   ├── DTOs/                # Request/response shapes for each endpoint
+│   ├── Data/                # RaceDayContext (EF Core, Code-First)
+│   ├── Services/            # PasswordService (BCrypt hashing)
+│   └── Program.cs
+├── RaceDay.Tests/
+│   ├── CustomWebApplicationFactory.cs  # Spins up the API with an in-memory DB for tests
+│   ├── TestHelpers.cs                  # Shared login helper for tests
+│   ├── AuthTests.cs
+│   ├── EventManagementTests.cs
+│   ├── RoleAccessTests.cs
+│   └── EnrolmentTests.cs
+└── .github/workflows/dotnet-ci.yml
 
