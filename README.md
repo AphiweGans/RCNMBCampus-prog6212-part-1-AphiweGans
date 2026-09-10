@@ -67,7 +67,7 @@ Run the API (`dotnet run` from `RaceDay.API`, or F5 in Visual Studio).
 Open `https://localhost:<port>/swagger` to view and test every endpoint through
 the Swagger UI.
 
-##Running the Tests
+## Running the Tests
 ```
 cd RaceDay_Part2
 dotnet test RaceDay.Tests/RaceDay.Tests.csproj
@@ -86,3 +86,7 @@ Every subsequent request automatically carries this cookie, so
 attributes on controllers enforce access without re-sending credentials.
 `POST /api/auth/logout` - ends the session.
 
+## CI/CD
+Workflow file: `.github/workflows/dotnet-ci.yml`
+Runs on every push/PR to `main`: restores, builds, and runs all unit tests.
+Screenshot of successful green build: ADD_SCREENSHOT_HERE
