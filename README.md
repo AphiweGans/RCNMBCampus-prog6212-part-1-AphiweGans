@@ -75,3 +75,14 @@ dotnet test RaceDay.Tests/RaceDay.Tests.csproj
 Tests use an EF Core in-memory database, so no live SQL Server connection is
 needed to run them - this is also why they can run inside GitHub Actions.
 
+
+##Authentication Flow
+`POST /api/auth/register` - creates an Organiser or Participant record with a
+BCrypt-hashed password (never stored in plain text).
+`POST /api/auth/login` - verifies credentials and issues an authentication
+cookie containing the user's id and role as claims.
+Every subsequent request automatically carries this cookie, so
+`[Authorize(Roles = "Organiser")]` / `[Authorize(Roles = "Participant")]`
+attributes on controllers enforce access without re-sending credentials.
+`POST /api/auth/logout` - ends the session.
+
