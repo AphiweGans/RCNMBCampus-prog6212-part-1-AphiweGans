@@ -67,3 +67,11 @@ Run the API (`dotnet run` from `RaceDay.API`, or F5 in Visual Studio).
 Open `https://localhost:<port>/swagger` to view and test every endpoint through
 the Swagger UI.
 
+##Running the Tests
+```
+cd RaceDay_Part2
+dotnet test RaceDay.Tests/RaceDay.Tests.csproj
+```
+Tests use an EF Core in-memory database, so no live SQL Server connection is
+needed to run them - this is also why they can run inside GitHub Actions.
+
