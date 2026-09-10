@@ -90,3 +90,6 @@ attributes on controllers enforce access without re-sending credentials.
 Workflow file: `.github/workflows/dotnet-ci.yml`
 Runs on every push/PR to `main`: restores, builds, and runs all unit tests.
 Screenshot of successful green build: ADD_SCREENSHOT_HERE
+
+## Video
+Unlisted YouTube link: 
