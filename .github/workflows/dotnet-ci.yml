@@ -24,12 +24,12 @@ jobs:
       - name: Validate repository structure
         run: |
           required_paths=(
-            "RaceDay_Part2/RaceDay.API/Program.cs"
-            "RaceDay_Part2/RaceDay.API/Data"
-            "RaceDay_Part2/RaceDay.API/Controllers"
-            "RaceDay_Part2/RaceDay.API/Models"
-            "RaceDay_Part2/RaceDay.Tests"
-            "RaceDay_Part2/README.md"
+            "RaceDay.API/Program.cs"
+            "RaceDay.API/Data"
+            "RaceDay.API/Controllers"
+            "RaceDay.API/Models"
+            "RaceDay.Tests"
+            "README.md"
           )
           for path in "${required_paths[@]}"; do
             if [ ! -e "$path" ]; then
@@ -40,10 +40,10 @@ jobs:
           echo "OK: Repository structure is valid."
 
       - name: Restore dependencies
-        run: dotnet restore RaceDay_Part2/RaceDay.Tests/RaceDay.Tests.csproj
+        run: dotnet restore RaceDay.Tests/RaceDay.Tests.csproj
 
       - name: Build
-        run: dotnet build RaceDay_Part2/RaceDay.Tests/RaceDay.Tests.csproj --no-restore --configuration Release
+        run: dotnet build RaceDay.Tests/RaceDay.Tests.csproj --no-restore --configuration Release
 
       - name: Run unit tests
-        run: dotnet test RaceDay_Part2/RaceDay.Tests/RaceDay.Tests.csproj --no-build --configuration Release --verbosity normal
+        run: dotnet test RaceDay.Tests/RaceDay.Tests.csproj --no-build --configuration Release --verbosity normal
