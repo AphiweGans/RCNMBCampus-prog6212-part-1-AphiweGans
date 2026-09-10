@@ -1,0 +1,49 @@
+name: RaceDay API - Build and Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: Build and run unit tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Validate repository structure
+        run: |
+          required_paths=(
+            "RaceDay_Part2/RaceDay.API/Program.cs"
+            "RaceDay_Part2/RaceDay.API/Data"
+            "RaceDay_Part2/RaceDay.API/Controllers"
+            "RaceDay_Part2/RaceDay.API/Models"
+            "RaceDay_Part2/RaceDay.Tests"
+            "RaceDay_Part2/README.md"
+          )
+          for path in "${required_paths[@]}"; do
+            if [ ! -e "$path" ]; then
+              echo "ERROR: Required path missing: $path"
+              exit 1
+            fi
+          done
+          echo "OK: Repository structure is valid."
+
+      - name: Restore dependencies
+        run: dotnet restore RaceDay_Part2/RaceDay.Tests/RaceDay.Tests.csproj
+
+      - name: Build
+        run: dotnet build RaceDay_Part2/RaceDay.Tests/RaceDay.Tests.csproj --no-restore --configuration Release
+
+      - name: Run unit tests
+        run: dotnet test RaceDay_Part2/RaceDay.Tests/RaceDay.Tests.csproj --no-build --configuration Release --verbosity normal
