@@ -49,4 +49,21 @@ permits. If your marker prioritises an exact ERD match over the stated
 functional requirement, consider removing `Distance`/`EventType` from Events
 and keeping distance only at the Category level instead.
 
+## Setup Instructions
+Install .NET 8 SDK, Visual Studio 2022 (with ASP.NET and web development
+workload), and SQL Server (Developer Edition) with SSMS.
+Clone the repository and open `RaceDay.API.csproj` (or the solution) in Visual Studio.
+Update the connection string in `RaceDay.API/appsettings.json` if your SQL Server
+instance name differs from `localhost`.
+Restore NuGet packages (Visual Studio does this automatically on open, or run
+`dotnet restore` from the `RaceDay_Part2` folder).
+Create the database using EF Core migrations:
+```
+   cd RaceDay.API
+   dotnet ef migrations add InitialCreate
+   dotnet ef database update
+   ```
+Run the API (`dotnet run` from `RaceDay.API`, or F5 in Visual Studio).
+Open `https://localhost:<port>/swagger` to view and test every endpoint through
+the Swagger UI.
 
