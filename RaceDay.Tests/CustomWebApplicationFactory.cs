@@ -10,6 +10,15 @@ namespace RaceDay.Tests;
 // DbContext for an EF Core InMemory database so tests don't need a live SQL Server.
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
+    // IMPORTANT: this name must be generated ONCE per factory instance, outside
+    // the AddDbContext configuration delegate below. AddDbContext's options
+    // delegate is re-evaluated once per request (its lifetime defaults to
+    // Scoped), so putting Guid.NewGuid() directly inside that delegate gives
+    // every single HTTP request its own empty database - which breaks any
+    // test that registers a user and then logs in, since "login" hits a
+    // different database than "register" did.
+    private readonly string _dbName = "RaceDayTestDb_" + Guid.NewGuid();
+
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.ConfigureServices(services =>
@@ -21,7 +30,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 
             services.AddDbContext<RaceDayContext>(options =>
             {
-                options.UseInMemoryDatabase("RaceDayTestDb_" + Guid.NewGuid());
+                options.UseInMemoryDatabase(_dbName);
             });
         });
     }
